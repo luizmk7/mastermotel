@@ -35,7 +35,7 @@ export const Hero: React.FC<HeroProps> = ({ onExploreSuites, onOpenBooking }) =>
         >
           <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#E50914] animate-ping" />
           <span className="text-[10px] sm:text-[11px] uppercase tracking-[0.22em] sm:tracking-[0.25em] text-white font-medium">
-            Boutique & Sensorial Hotel
+            MASTER MOTEL
           </span>
         </motion.div>
 

@@ -3,7 +3,7 @@ import { Suite } from '../types';
 export const SUITES_DATA: Suite[] = [
   {
     id: 'imperial',
-    title: 'Suíte Imperial Lumière',
+    title: 'Suíte Imperial Master',
     category: 'imperial',
     categoryLabel: 'Edição Especial & Teto Solar',
     badge: 'Mais Desejada',

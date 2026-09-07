@@ -36,7 +36,7 @@ export const ReviewsSection: React.FC = () => {
           O Que Nossos Clientes Dizem
         </h2>
         <p className="text-zinc-400 text-sm mt-3 font-light">
-          Avaliações anônimas de hóspedes que viveram a experiência Lumière.
+          Avaliações anônimas de hóspedes que viveram a experiência no MASTER MOTEL.
         </p>
       </div>
 

@@ -19,7 +19,7 @@ export const LocationSection: React.FC<LocationSectionProps> = ({ onOpenBooking 
           className="lg:col-span-7 bg-[#0B0B0B] rounded-3xl overflow-hidden border border-white/10 h-96 relative group shadow-2xl"
         >
           <iframe
-            title="Mapa de Localização Motel Lumière"
+            title="Mapa de Localização MASTER MOTEL"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3981.332354785465!2d-38.53!3d-3.75!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zM8KwNDUnMDAuMCJTIDM4wrAzMSc0OC4wIlc!5e0!3m2!1spt-BR!2sbr!4v1620000000000!5m2!1spt-BR!2sbr"
             className="w-full h-full border-0 filter grayscale invert contrast-125 opacity-75 group-hover:opacity-100 transition duration-500"
             loading="lazy"
@@ -43,7 +43,7 @@ export const LocationSection: React.FC<LocationSectionProps> = ({ onOpenBooking 
             Localização Privilegiada
           </span>
           <h2 className="text-3xl sm:text-4xl font-serif text-white font-normal mt-2 mb-6">
-            Motel Lumière Premium
+            MASTER MOTEL
           </h2>
 
           <div className="space-y-6 text-sm text-zinc-400 font-light mb-8">

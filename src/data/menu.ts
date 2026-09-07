@@ -34,8 +34,8 @@ export const MENU_ITEMS: MenuItem[] = [
     image: 'https://images.unsplash.com/photo-1633964913295-ceb43826e7c9?auto=format&fit=crop&w=700&q=80'
   },
   {
-    id: 'cafe-lumiere',
-    title: 'Café da Manhã Lumière Premium',
+    id: 'cafe-master',
+    title: 'Café da Manhã Master Premium',
     category: 'Café da Manhã',
     price: 85,
     desc: 'Cesta de croissants quentinhos, suco de laranja natural prensado, frutas laminadas, ovos mexidos e café expresso.',

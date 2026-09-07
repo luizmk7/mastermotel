@@ -29,7 +29,7 @@ export const Experiences: React.FC = () => {
         >
           <img
             src="https://images.unsplash.com/photo-1540518614846-7ede433c4ef7?auto=format&fit=crop&w=1200&q=85"
-            alt="Ambiente de Suíte Lumière com iluminação indireta"
+            alt="Ambiente de Suíte MASTER MOTEL com iluminação indireta"
             className="w-full h-[380px] sm:h-[440px] object-cover group-hover:scale-105 transition duration-700"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/90 via-transparent to-transparent" />
@@ -109,7 +109,7 @@ export const Experiences: React.FC = () => {
         >
           <img
             src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=85"
-            alt="Detalhes de luxo e privacidade Lumière"
+            alt="Detalhes de luxo e privacidade MASTER MOTEL"
             className="w-full h-[380px] sm:h-[440px] object-cover group-hover:scale-105 transition duration-700"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/90 via-transparent to-transparent" />

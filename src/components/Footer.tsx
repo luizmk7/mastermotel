@@ -124,9 +124,9 @@ export const Footer: React.FC = () => {
 
         {/* Bottom copyright */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
-          <p>© 2026 Motel Lumière Premium. Todos os direitos reservados.</p>
+          <p>© 2026 MASTER MOTEL. Todos os direitos reservados.</p>
           <p className="italic font-serif text-[#E50914]/90">
-            “Motel Lumière Premium — momentos criados para serem lembrados.”
+            “MASTER MOTEL — momentos criados para serem lembrados.”
           </p>
         </div>
       </div>

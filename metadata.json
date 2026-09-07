@@ -1,6 +1,6 @@
 {
-  "name": "Motel Lumière Premium",
-  "description": "Experiência digital exclusiva para o Motel Lumière Premium. Suítes boutique com hidromassagem, piscina privativa, gastronomia 24h e reserva discreta via WhatsApp.",
+  "name": "MASTER MOTEL",
+  "description": "Experiência digital exclusiva para o MASTER MOTEL. Suítes boutique com hidromassagem, piscina privativa, gastronomia 24h e reserva discreta via WhatsApp.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
