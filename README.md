@@ -1,11 +1,28 @@
-<div align="center">
+# Mastermotel — publicação na Vercel
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+Site React + Vite exportado do AI Studio.
 
-  <h1>Built with AI Studio</h2>
+## Publicar
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+1. Extraia o ZIP no computador.
+2. No repositório luizmk7/mastermotel, envie o conteúdo extraído para a branch main (Add file → Upload files).
+3. package.json, package-lock.json, index.html, vercel.json e a pasta src precisam estar na raiz. Não envie somente o ZIP nem uma pasta envolvendo todo o projeto.
+4. Confirme o commit. Na Vercel, confira a conexão com esse repositório e a branch main.
+5. Em Settings → Build and Deployment, deixe Root Directory na raiz (campo vazio). vercel.json configura Vite, npm ci, npm run build e saída dist.
+6. Aguarde a implantação do novo commit. Se não iniciar automaticamente, crie uma implantação do commit mais recente da main. Reexecutar um commit antigo continuará usando os arquivos antigos.
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
+## Executar localmente
 
-</div>
+Use Node.js 22.12 ou superior compatível com as dependências.
+
+```sh
+npm ci
+npm run build
+npm run dev
+```
+
+O site atual não usa a API Gemini e não precisa de GEMINI_API_KEY para compilar.
+
+## Dados do site
+
+O conteúdo original mantém o nome Motel Lumière Premium. O destino de reservas em src/App.tsx é 5585999999999; substitua pelo WhatsApp real antes de receber clientes.
