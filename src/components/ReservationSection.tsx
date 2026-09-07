@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { MessageSquare, Heart, Sparkles, Shield, Send, X } from 'lucide-react';
+import { MessageSquare, Heart, Sparkles, Shield, Send, X, Calendar, Clock } from 'lucide-react';
 import { SUITES_DATA } from '../data/suites';
 import { MenuItem, BookingFormData } from '../types';
 
@@ -12,14 +12,29 @@ interface ReservationSectionProps {
   onShowToast: (title: string, message: string, type: 'success' | 'info' | 'warning') => void;
 }
 
-const DATE_TIME_PRESETS = [
-  { id: 'imediata', label: 'Chegada Imediata', sublabel: 'Agora / Próximos minutos', value: 'Chegada Imediata (Agora)' },
-  { id: 'noite', label: 'Hoje à Noite', sublabel: 'A partir das 20h', value: 'Hoje à Noite (após 20h)' },
-  { id: 'madrugada', label: 'Hoje de Madrugada', sublabel: 'Das 00h às 06h', value: 'Hoje de Madrugada' },
-  { id: 'amanha', label: 'Amanhã', sublabel: 'Reserva antecipada', value: 'Amanhã' },
-  { id: 'fds', label: 'Final de Semana', sublabel: 'Sexta / Sáb / Dom', value: 'Próximo Final de Semana' },
-  { id: 'outro', label: 'Outro Horário', sublabel: 'Personalizar', value: 'Outro Horário' },
-];
+const getTodayDateString = () => {
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const dd = String(today.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+};
+
+const getCurrentTimeString = () => {
+  const now = new Date();
+  const hh = String(now.getHours()).padStart(2, '0');
+  const mm = String(now.getMinutes()).padStart(2, '0');
+  return `${hh}-${mm}`;
+};
+
+const formatBrazilianDate = (dateStr: string) => {
+  if (!dateStr) return '';
+  const parts = dateStr.split('-');
+  if (parts.length === 3) {
+    return `${parts[2]}/${parts[1]}/${parts[0]}`;
+  }
+  return dateStr;
+};
 
 export const ReservationSection: React.FC<ReservationSectionProps> = ({
   initialSuiteId = 'premium',
@@ -28,14 +43,14 @@ export const ReservationSection: React.FC<ReservationSectionProps> = ({
   whatsappNumber,
   onShowToast,
 }) => {
-  const [isCustomDate, setIsCustomDate] = useState(false);
-  const [customDateText, setCustomDateText] = useState('');
+  const [selectedDate, setSelectedDate] = useState(getTodayDateString());
+  const [selectedTime, setSelectedTime] = useState(getCurrentTimeString());
 
   const [formData, setFormData] = useState<BookingFormData>({
     name: '',
     suiteId: initialSuiteId,
     suiteTitle: SUITES_DATA.find((s) => s.id === initialSuiteId)?.title || 'Suíte Premium Gold',
-    date: initialDate || 'Chegada Imediata (Agora)',
+    date: '',
     period: initialPeriod,
     guests: '1 Casal (2 pessoas)',
     romanticSetup: false,
@@ -68,33 +83,20 @@ export const ReservationSection: React.FC<ReservationSectionProps> = ({
 
   useEffect(() => {
     if (initialDate) {
-      const match = DATE_TIME_PRESETS.find((p) => p.value === initialDate);
-      if (match) {
-        setIsCustomDate(false);
-        setFormData((prev) => ({ ...prev, date: match.value }));
-      } else {
-        setIsCustomDate(true);
-        setCustomDateText(initialDate);
-        setFormData((prev) => ({ ...prev, date: initialDate }));
+      // If a pre-filled date string was passed, we try to see if we can parse it as YYYY-MM-DD
+      const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+      if (dateRegex.test(initialDate)) {
+        setSelectedDate(initialDate);
       }
     }
   }, [initialDate]);
 
-  const handleSelectDatePreset = (preset: typeof DATE_TIME_PRESETS[number]) => {
-    if (preset.id === 'outro') {
-      setIsCustomDate(true);
-      setFormData((prev) => ({
-        ...prev,
-        date: customDateText.trim() || 'Outro Horário',
-      }));
-    } else {
-      setIsCustomDate(false);
-      setFormData((prev) => ({
-        ...prev,
-        date: preset.value,
-      }));
-    }
-  };
+  useEffect(() => {
+    setFormData((prev) => ({
+      ...prev,
+      date: `${formatBrazilianDate(selectedDate)} às ${selectedTime}h`,
+    }));
+  }, [selectedDate, selectedTime]);
 
   useEffect(() => {
     if (initialPeriod) {
@@ -291,77 +293,40 @@ Gostaria de confirmar a disponibilidade e a entrada discreta. Obrigado!`;
                 </div>
               </div>
 
-              {/* Date / Time Clickable Buttons */}
-              <div className="sm:col-span-2">
-                <div className="flex items-center justify-between mb-2">
-                  <label className="block text-xs uppercase tracking-wider text-zinc-300 font-semibold">
-                    Data e Horário Previsto
+              {/* Data e Horário Previsto (Profissional) */}
+              <div className="sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs uppercase tracking-wider text-zinc-300 font-semibold mb-2">
+                    Data de Chegada
                   </label>
-                  <span className="text-[11px] text-zinc-400 font-mono">
-                    Toque para selecionar
-                  </span>
-                </div>
-
-                {/* Clickable Preset Buttons Grid */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-2.5">
-                  {DATE_TIME_PRESETS.map((preset) => {
-                    const isSelected = isCustomDate
-                      ? preset.id === 'outro'
-                      : formData.date === preset.value;
-                    return (
-                      <button
-                        key={preset.id}
-                        type="button"
-                        onClick={() => handleSelectDatePreset(preset)}
-                        className={`p-3 rounded-xl border text-left transition-all relative flex flex-col justify-center cursor-pointer ${
-                          isSelected
-                            ? 'border-[#E50914] bg-[#E50914]/15 ring-1 ring-[#E50914] shadow-md shadow-[#E50914]/10'
-                            : 'border-white/10 bg-[#050505] hover:border-white/25 hover:bg-white/5'
-                        }`}
-                      >
-                        <div className="flex items-center justify-between gap-1 mb-0.5">
-                          <span
-                            className={`text-xs font-semibold block truncate ${
-                              isSelected ? 'text-white' : 'text-zinc-200'
-                            }`}
-                          >
-                            {preset.label}
-                          </span>
-                          {isSelected && (
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#E50914] shrink-0" />
-                          )}
-                        </div>
-                        <span className="text-[10px] text-zinc-400 font-mono block truncate">
-                          {preset.sublabel}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
-
-                {/* Custom input when 'Outro Horário' is chosen */}
-                {isCustomDate && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mt-2.5"
-                  >
+                  <div className="relative">
+                    <Calendar className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#E50914] pointer-events-none" />
                     <input
-                      type="text"
-                      placeholder="Ex: Sexta-feira às 22h, ou 20/10 às 15h"
-                      value={customDateText}
-                      onChange={(e) => {
-                        setCustomDateText(e.target.value);
-                        setFormData((prev) => ({
-                          ...prev,
-                          date: e.target.value || 'Outro Horário',
-                        }));
-                      }}
-                      className="w-full bg-[#050505] border border-[#E50914] text-white rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#E50914] transition-colors"
-                      autoFocus
+                      type="date"
+                      required
+                      value={selectedDate}
+                      min={getTodayDateString()}
+                      onChange={(e) => setSelectedDate(e.target.value)}
+                      className="w-full bg-[#050505] border border-white/15 focus:border-[#E50914] text-white rounded-xl px-4 py-3.5 pl-11 text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#E50914] transition-colors [color-scheme:dark]"
                     />
-                  </motion.div>
-                )}
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs uppercase tracking-wider text-zinc-300 font-semibold mb-2">
+                    Horário de Chegada
+                  </label>
+                  <div className="relative">
+                    <Clock className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#E50914] pointer-events-none" />
+                    <input
+                      type="time"
+                      required
+                      value={selectedTime}
+                      onChange={(e) => setSelectedTime(e.target.value)}
+                      className="w-full bg-[#050505] border border-white/15 focus:border-[#E50914] text-white rounded-xl px-4 py-3.5 pl-11 text-xs sm:text-sm focus:outline-none focus:ring-1 focus:ring-[#E50914] transition-colors [color-scheme:dark]"
+                    />
+                  </div>
+                </div>
               </div>
 
               {/* Period */}
